@@ -1,9 +1,27 @@
-# Challenge 5: Complete this values file
-#
-# Define values for:
-# - image: repository, tag, pullPolicy
-# - replicaCount
-# - service: type, port
-# - resources (optional)
-#
-# Hint: The Python server listens on port 8080
+# =============================================================================
+# Helm Values — Python HTTP Server
+# =============================================================================
+
+# -- Number of pod replicas
+replicaCount: 1
+
+# -- Container image configuration
+image:
+  repository: localhost/my-http-server
+  tag: "latest"
+  pullPolicy: Never
+
+# -- Service configuration
+service:
+  type: ClusterIP
+  port: 8080          # Python server listens on 8080
+
+# -- Resource requests and limits (optional)
+# Uncomment and adjust to enforce resource boundaries
+# resources:
+#   requests:
+#     cpu: 100m
+#     memory: 128Mi
+#   limits:
+#     cpu: 500m
+#     memory: 256Mi
