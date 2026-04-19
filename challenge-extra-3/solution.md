@@ -4,8 +4,8 @@ To solve this challenge I used helm-unittest. The reason for choosing this is th
 have experience with it and after a quick look at the documentation of chart-testing
 like the approach of having a helm plugin instead of a fully independent binary more.
 
-I created the test files so that they make very general basic checks (are things rendered?)
-and then checked every value substitution in the templates.
+I created the test files so that they make very general basic checks (are things rendered
+when they should be?) and then checked every value substitution in the templates.
 
 The result looks like this:
 
@@ -22,5 +22,4 @@ Test Suites: 2 passed, 2 total
 Tests:       26 passed, 26 total
 Snapshot:    0 passed, 0 total
 Time:        11.656026ms
-
 ```

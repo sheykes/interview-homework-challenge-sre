@@ -9,7 +9,7 @@ import shutil
 
 
 def bytes_to_human(n):
-    for unit in ("B", "KB", "MB", "GB", "TB"):
+    for unit in ("B", "kB", "MB", "GB", "TB"):
         if n < 1024:
             return f"{n:.1f} {unit}"
         n /= 1024

@@ -139,8 +139,6 @@ First identify which port is exposed by the service, then forward that to 8080 o
 stefan@fedora:~/Dokumente/orcrist/interview-homework-challenge-sre/challenge-extra-1$ kubectl get svc -n orcrist
 NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 nginx-service   ClusterIP   10.110.29.232   <none>        80/TCP    13m
-stefan@fedora:~/Dokumente/orcrist/interview-homework-challenge-sre/challenge-extra-1$ kubectl port-forward svc/nginx-service 80:8080 -n orcrist
-error: Service nginx-service does not have a service port 8080
 stefan@fedora:~/Dokumente/orcrist/interview-homework-challenge-sre/challenge-extra-1$ kubectl port-forward svc/nginx-service 8080:80 -n orcrist
 Forwarding from 127.0.0.1:8080 -> 80
 Forwarding from [::1]:8080 -> 80

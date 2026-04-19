@@ -8,8 +8,8 @@ the image created in Challenge 3 into my minikube and set the values accordingly
 referencing a localhost repository and imagePullPolicy: Never to use that manually loaded image).
 
 When using a proper image registry these values would have to be changed. In production the `latest`
-tag should also usually not be used as there is no guarantee what actually is behind that, a version
-nummer or commit ID is preferable as a tag.
+tag should also usually not be used as there is no guarantee what actually is behind that, a semantic
+version number or at least a commit ID is preferable as a tag.
 
 ## Verification
 

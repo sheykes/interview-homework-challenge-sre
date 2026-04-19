@@ -14,16 +14,12 @@ logical separation — namespaces, deployments, and pods are each defined in the
 Provider configuration and the `kube_context` variable live in `main.tf` and `variables.tf`,
 letting you target different clusters without touching the resource definitions.
 
----
-
 ## Implicit Dependencies
 
 Rather than hardcoding namespace names as strings, resources reference the namespace
 Terraform object directly (e.g. `kubernetes_namespace.orcrist.metadata[0].name`).
 This creates **implicit dependencies** in the graph, so Terraform always provisions
 namespaces before the workloads that live inside them — no `depends_on` needed.
-
----
 
 ## Usage
 
@@ -43,7 +39,9 @@ terraform apply
 terraform destroy
 ```
 
-This is what was applied on my test system:
+To show that it worked I committed the tfstate as part of the terraform files.
+
+This is how it was applied on my test system:
 
 ```
 stefan@fedora:~/Dokumente/orcrist/interview-homework-challenge-sre/challenge-extra-2/terraform$ terraform apply
