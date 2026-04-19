@@ -1,0 +1,113 @@
+suite: Service
+templates:
+  - service.yaml
+
+tests:
+  # ---------------------------------------------------------------------------
+  # Metadata
+  # ---------------------------------------------------------------------------
+  - it: sets the fullname as the Service name
+    release:
+      name: myrelease
+    asserts:
+      - equal:
+          path: metadata.name
+          value: myrelease-server-chart
+
+  - it: uses fullnameOverride when provided
+    set:
+      fullnameOverride: custom-name
+    asserts:
+      - equal:
+          path: metadata.name
+          value: custom-name
+
+  - it: includes helm.sh/chart label
+    release:
+      name: myrelease
+    asserts:
+      - matchRegex:
+          path: metadata.labels["helm.sh/chart"]
+          pattern: ^server-chart-
+
+  - it: includes managed-by label
+    release:
+      name: myrelease
+      service: Helm
+    asserts:
+      - equal:
+          path: metadata.labels["app.kubernetes.io/managed-by"]
+          value: Helm
+
+  # ---------------------------------------------------------------------------
+  # Spec — type
+  # ---------------------------------------------------------------------------
+  - it: sets service type to ClusterIP by default
+    asserts:
+      - equal:
+          path: spec.type
+          value: ClusterIP
+
+  - it: overrides service type to NodePort
+    set:
+      service.type: NodePort
+    asserts:
+      - equal:
+          path: spec.type
+          value: NodePort
+
+  - it: overrides service type to LoadBalancer
+    set:
+      service.type: LoadBalancer
+    asserts:
+      - equal:
+          path: spec.type
+          value: LoadBalancer
+
+  # ---------------------------------------------------------------------------
+  # Spec — selector
+  # ---------------------------------------------------------------------------
+  - it: selects pods by selectorLabels
+    release:
+      name: myrelease
+    asserts:
+      - equal:
+          path: spec.selector["app.kubernetes.io/name"]
+          value: server-chart
+      - equal:
+          path: spec.selector["app.kubernetes.io/instance"]
+          value: myrelease
+
+  # ---------------------------------------------------------------------------
+  # Spec — ports
+  # ---------------------------------------------------------------------------
+  - it: exposes port 8080 named http by default
+    asserts:
+      - equal:
+          path: spec.ports[0].name
+          value: http
+      - equal:
+          path: spec.ports[0].port
+          value: 8080
+      - equal:
+          path: spec.ports[0].protocol
+          value: TCP
+      - equal:
+          path: spec.ports[0].targetPort
+          value: http
+
+  - it: overrides service port
+    set:
+      service.port: 9090
+    asserts:
+      - equal:
+          path: spec.ports[0].port
+          value: 9090
+
+  - it: targetPort always points to the named http port on the pod
+    set:
+      service.port: 9090
+    asserts:
+      - equal:
+          path: spec.ports[0].targetPort
+          value: http
